@@ -36,3 +36,23 @@
     transform: rotate(360deg);
   }
 }
+
+
+.cardStyle{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid red;
+  max-width: 200px;
+}
+
+.imgStyle{
+  height: 100px;
+  width: 100px;
+}
+
+.textViewStyle{
+  display: flex;
+  flex-direction: row;
+}
