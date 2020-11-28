@@ -3,11 +3,11 @@ import React from 'react'
 
 //ArrowFuction tiene implicito un return asi que no es necesario ponerlo solo usar parentesis
 
-const Card = ({img,name,phone}) => (
+const Card = ({name,catchPhrase}) => (
     <div className="cardStyle">
-        <img src={img} className="imgStyle" />
+        <img src={{uri:"https://avatars3.githubusercontent.com/u/29002976?s=400&u=162a3266866c089404e113c204e8af61c08195a1&v=4"}} className="imgStyle" />
         <span>Nombre: {name}</span>
-        <span>Telefono: {phone}</span>
+        <span>Frase: {catchPhrase}</span>
     </div>
 );
 
