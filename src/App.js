@@ -1,88 +1,69 @@
-import React, {Component} from 'react';
-import './App.css';
-import Card from './components/Card';
-import { createCelebrity, getCelebrity } from './services/celibrityServices';
+
+//que es el state? 
+// en que estructura o tipo de componete se usa un state? == class
+// state= {} this.setState
+// componentDidMount, componentDidUpdate ...
 
 
-class App extends Component {
+// class Demo extends Component{render(){return(<di/>)}}
 
-  state={
-    celebrities:[],
-    data:{}
-  }
+// para una funcion o const que se utiliza useSate
 
+/// state => useState
+// ciclos de vida ==> useEffect
 
-  //este es el bueno!!
-  componentDidMount(){
-
-    getCelebrity().then(response=>{
-      console.log("queee es el response",response)
-      this.setState({celebrities: response.data.celebrities })
-    }).catch(error=>{
-      console.log("queee es el error",error)
-
-    })
-  }
-  componentWillUnmount(){
-    console.log("antes de que muera")
-  }
-  //eeste ya no se usa
-  // componentWillMount(){
-  //   console.log("me ejecuto antes de que exista algo")
-  // }
+import {useState,useEffect} from 'react';
+const otro = 0;
 
 
-  handleChange=(event)=>{
-    const {value,name} = event.target;
-    let {data} = this.state;
+const data = ["Pizza","Alitas","Papas","Hotdog","Tacos","quesadillas","OtrosTacos"]
 
-    data[name] = value;
+function App(){
+     //acumulor , elModificador
+ const [numb,setNumb] = useState(otro)
+ useEffect(()=>{
+   setTimeout(()=>{
+     setNumb(20)
+   },3000)
 
-    this.setState({data})
+   //getNumber().then(r=>setNumb(r)).catch
+ },[])
 
-  }
-  onSend=()=>{
-    let {celebrities,data} = this.state
-    console.log("que trae la dara",this.state.data)
+ const [search,setSearch] = useState('')
+ const [foot,setFoot] = useState(data)
 
-    createCelebrity(this.state.data).then(response=>{
+ const handleChange = (e) => {
+   const {name,value} = e.target
 
-      celebrities = [...celebrities,data]
-      this.setState({celebrities,data:{}})
-      console.log("creoo algo",response)
-     
-    }).catch(error=>{
-      console.log("no pude crearlo",error)
+   let newArr = data.filter((item,key)=> item.toLocaleLowerCase().includes(value.toLocaleLowerCase()) )
+   setFoot(newArr)
+   setSearch(value)
+ }
 
-    })
-  }
-  render(){
-    // console.log("esto es el this",this)
-    // console.log("esto es el this.state",this.state)
-    // console.log("esto es el this.state.contacts",this.state.contacts)
-    return (
-
-       <div className="App"> 
-        <div style={{
-          display:"flex",
-          flexDirection:'column',
-
+  return(
+    <div>
+      <h1>Este es un contador {numb}</h1>
+      <button onClick={()=>{
+        let num2 = numb + 1
+        setNumb(num2)
         }}>
-          <input placeholder="Nombre" onChange={(e)=>this.handleChange(e)} name="name"/>
-          <input placeholder="Ocupacion" onChange={(e)=>this.handleChange(e)} name="occupation"/>
-          <input placeholder="Frase" onChange={(e)=>this.handleChange(e)} name="catchPhrase"/>
-          <button onClick={this.onSend} >Enviar</button>
-        </div>
+        +
+      </button>
+      <button onClick={()=>{
+        let num2 = numb - 1
+        setNumb(num2)
+        }}>
+        -
+      </button>
 
-        {
-            this.state.celebrities.map((item,index)=>
-              <Card key={index}  {...item} />
-            )
 
-        }
-      </div> 
-    );
-  }
+      {/* buscador */}
+      <input value={search} onChange={handleChange}/>
+      <div style={{display:"flex",flexDirection:"column"}}>
+        {foot.map((item,key)=><span key={key}>{item}</span>)}
+      </div>
+    </div>
+  )
 }
 
-export default App;
+ export default App;
